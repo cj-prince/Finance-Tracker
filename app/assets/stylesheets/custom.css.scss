@@ -1,7 +1,7 @@
 @import 'bootstrap/dist/css/bootstrap';
 
 .search-area {
-    padding: 50px;
+    padding: 10px;
 }
 
 .no-right-padding{
@@ -9,4 +9,9 @@
 }
 .no-left-padding{
     padding-left: 0 !important;
+}
+
+.results-block{
+    display: inline-block;
+    margin-top: 0px;
 }
