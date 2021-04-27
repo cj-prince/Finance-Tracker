@@ -13,7 +13,6 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Link</a>
           </li>
-          
         </ul>
         <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -21,7 +20,16 @@
         </form>
 
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
+          <li class="nav-item user-name">
+            <%= fa_icon 'user' %> <%= current_user.full_name %>
+          </li>
+          <li class="nav-item user-name">
+            <%= link_to edit_user_registration_path do %>
+              <%=  fa_icon "edit" %>
+            <% end %>
+          </li>
+
+          <li class="nav-item ">
               <%= link_to "Log OUT", destroy_user_session_path, method: :delete, class:'btn btn-sm btn-danger' %>
           </li>
         </ul>
