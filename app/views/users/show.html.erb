@@ -1,0 +1,62 @@
+<h2>Users stocks</h2>
+
+
+
+<div class="card card-header results-block">
+<table class="col-md-12">
+    <tbody>
+        <tr>
+        <td><strong>Name: </strong> <%= @user.full_name %></td>
+        <td><strong>Email: </strong> <%= @user.email %>
+        <td>
+            <% if current_user.not_friends_with?(@user.id) %>   
+                <%= link_to 'Follow friend?', friendships_path(friend: @user),
+                                    class: "btn btn-sm btn-success", method: :post %>
+            <% else %>
+                <span class="badge badge-secondary"> You are friends </span>
+            <% end %>
+        </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+
+<% if !@tracked_stocks.empty? %>
+<table class="table table-bordered table-dark table-hover">
+<thead>
+    <tr>
+    <th scope="col">Ticker</th>
+    <th scope="col">Name</th>
+    <th scope="col">Price</th>
+    <th scope="col">Actions</th>
+    </tr>
+</thead>
+<tbody>
+    <% @tracked_stocks.each do |stock| %>
+        <tr>
+            <th scope="row"><%= stock.ticker %></th>
+            <td><%= stock.name %></td>
+            <td><%= stock.last_price %></td>
+            <td><% if current_user.can_track_stock?(stock.ticker) %>
+                  <%= link_to 'Add Stock', user_stocks_path(user: current_user, ticker: stock.ticker), method: :post, class:'btn btn-sm btn-success'%>
+                <% else %>
+                    <span class="badge badge-secondary">
+                        You are already tracking this stock
+                        <% if !current_user.under_stock_limit? %>
+                            10 stocks
+                        <% end %>
+                        <% if current_user.stock_already_tracked?(stock.ticker) %>
+                            this stock 
+                        <% end %>
+                    </span>
+                <% end %>
+            </td>
+        </tr>
+    <% end %>
+</tbody>
+</table>
+<% else %>
+    <p class="lead">Stock profile is empty</p>
+<% end %>
